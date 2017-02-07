@@ -43,7 +43,7 @@ public class GestioDocumentCaracters {
                     escritorFichero.write(linea + "\n");
                     System.out.println(linea);
                 }
-
+                
                 //Es tanca el buffer lector i l'escriptor.
                 lectorFichero.close();
                 escritorFichero.close();
