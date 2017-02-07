@@ -28,7 +28,10 @@ public class GestioDocumentCaracters {
     BufferedWriter escritorFichero;
 
 
- 
+    /**
+     * Metode que copia el contingut d'un fitxer en un altre.
+     * Se li passen el fitxer d'on llegeix i el fitxer on escriu.
+     */
     public void copiarFitxersBuffers() {
         try {
             try {
@@ -59,5 +62,36 @@ public class GestioDocumentCaracters {
     }
 
 
+    /**
+     * Metode que copia el contingut d'un fitxer en un altre i el comprimeix.
+     * Se li passen el fitxer d'on llegeix i el fitxer on escriu.
+     */
+    public void copiarFitxersBuffersComprimit() {
+        try {
+            try {
+                //inicialitzem els buffers.
+                lectorFichero = new BufferedReader(new FileReader(fitxerLlegir));
+                escritorFichero = new BufferedWriter(new FileWriter(fitxerEscriure));
+                String linea;
+                
+                //Bucle que recorrera el fitxer que es llegeix i va escribint en el fitxer
+                //d'escriptura.
+                while ((linea = lectorFichero.readLine()) != null) { 
+                    escritorFichero.write(linea + "\n");
+                    System.out.println(linea);
+                }
+                
+                //Es tanca el buffer lector i l'escriptor.
+                lectorFichero.close();
+                escritorFichero.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();//traza de excepcion 
 
+            } catch (IOException e) {
+                e.printStackTrace();//traza de excepcion 
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
