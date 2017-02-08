@@ -6,11 +6,13 @@ import java.io.File;
 import static java.io.FileDescriptor.in;
 import static java.io.FileDescriptor.out;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.System.in;
 import static java.lang.System.out;
+import java.util.zip.GZIPOutputStream;
 import static javax.management.Query.in;
 import static sun.misc.MessageUtils.out;
 
@@ -31,8 +33,10 @@ public class GestioDocumentCaracters {
     /**
      * Metode que copia el contingut d'un fitxer en un altre.
      * Se li passen el fitxer d'on llegeix i el fitxer on escriu.
+     * @param fitxerLlegir
+     * @param fitxerEscriure 
      */
-    public void copiarFitxersBuffers() {
+    public void copiarFitxersBuffers(File fitxerLlegir, File fitxerEscriure) {
         try {
             try {
                 //inicialitzem els buffers.
@@ -65,13 +69,19 @@ public class GestioDocumentCaracters {
     /**
      * Metode que copia el contingut d'un fitxer en un altre i el comprimeix.
      * Se li passen el fitxer d'on llegeix i el fitxer on escriu.
+     * @param fitxerLlegir
+     * @param fitxerEscriure 
      */
-    public void copiarFitxersBuffersComprimit() {
+    public void copiarFitxersBuffersComprimit(File fitxerLlegir, File fitxerEscriure) {
         try {
             try {
                 //inicialitzem els buffers.
                 lectorFichero = new BufferedReader(new FileReader(fitxerLlegir));
                 escritorFichero = new BufferedWriter(new FileWriter(fitxerEscriure));
+                //Es crea un FileOutputStream
+                FileOutputStream outputStream = new FileOutputStream("archivoZIP.zip");
+                
+                GZIPOutputStream gos = new GZIPOutputStream(outputStream);
                 String linea;
                 
                 //Bucle que recorrera el fitxer que es llegeix i va escribint en el fitxer
