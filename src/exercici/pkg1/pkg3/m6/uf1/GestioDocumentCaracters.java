@@ -94,7 +94,7 @@ public class GestioDocumentCaracters {
                 int contador = 0;
                 while ((c = inputStream.read()) != -1) {
                     data[contador] = (byte) c;
-                    outputStream.write(contador);
+                    gos.write(contador);
                 contador++;
                 }
                 
