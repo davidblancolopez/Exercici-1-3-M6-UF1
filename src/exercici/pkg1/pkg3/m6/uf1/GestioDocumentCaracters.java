@@ -84,10 +84,9 @@ public class GestioDocumentCaracters {
                 FileOutputStream outputStream = new FileOutputStream("archivoZIP.zip");
 
                 GZIPOutputStream gos = new GZIPOutputStream(outputStream);
-                
 
                 byte data[] = new byte[1024];
-                
+
                 //Bucle que recorrera el fitxer que es llegeix i va escribint en el fitxer
                 //d'escriptura.
                 int c;
@@ -95,9 +94,8 @@ public class GestioDocumentCaracters {
                 while ((c = inputStream.read()) != -1) {
                     data[contador] = (byte) c;
                     gos.write(contador);
-                contador++;
+                    contador++;
                 }
-                
 
                 //Es tanca el buffer lector i l'escriptor.
                 lectorFichero.close();
@@ -112,4 +110,29 @@ public class GestioDocumentCaracters {
             System.out.println(e);
         }
     }
+
+    public void CercarCadenaText(String cadena, File fitxer) {
+        try {
+            final BufferedReader reader = new BufferedReader(new FileReader(fitxer));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                if (line.indexOf(cadena) != -1) {
+                    System.out.println("" + line);
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    public void descarregarURL(){
+        
+    }
+    
+    
+    
 }
