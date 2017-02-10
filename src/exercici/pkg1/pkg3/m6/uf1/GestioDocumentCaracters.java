@@ -142,17 +142,17 @@ public class GestioDocumentCaracters {
         
         URL direccio = new URL(url);
         InputStream inputStream = direccio.openStream();
-        OutputStream outputStream = new FileOutputStream(fitxer); // path y nombre del nuevo fichero creado
+        OutputStream outputStream = new FileOutputStream(fitxer); 
 
-        byte[] b = new byte[2048];
+        byte[] dades = new byte[2048];
         int longitud;
 
-        while ((longitud = inputStream.read(b)) != -1) {
-            outputStream.write(b, 0, longitud);
+        while ((longitud = inputStream.read(dades)) != -1) {
+            outputStream.write(dades, 0, longitud);
         }
 
-        inputStream.close();  // Cerramos la conexión entrada
-        outputStream.close(); // Cerramos la conexión salida
+        inputStream.close();  
+        outputStream.close(); 
 
     }
 
