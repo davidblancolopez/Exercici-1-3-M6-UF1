@@ -111,13 +111,20 @@ public class GestioDocumentCaracters {
         }
     }
 
+    /**
+     * Metode que rep una cadena de ext y un fitxer i busca a dintre si hi ha escrit
+     * el que hi ha a la cadena.
+     * 
+     * @param cadena
+     * @param fitxer 
+     */
     public void CercarCadenaText(String cadena, File fitxer) {
         try {
             final BufferedReader reader = new BufferedReader(new FileReader(fitxer));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                if (line.indexOf(cadena) != -1) {
-                    System.out.println("" + line);
+            String linia = "";
+            while ((linia = reader.readLine()) != null) {
+                if (linia.indexOf(cadena) != -1) {
+                    System.out.println("" + linia);
                 }
             }
             reader.close();
