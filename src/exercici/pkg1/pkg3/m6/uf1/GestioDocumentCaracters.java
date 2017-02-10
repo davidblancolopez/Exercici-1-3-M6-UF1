@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import static java.lang.System.in;
 import static java.lang.System.out;
 import java.net.URL;
@@ -76,41 +77,21 @@ public class GestioDocumentCaracters {
      * @param fitxerLlegir
      * @param fitxerEscriure
      */
-    public void copiarFitxersBuffersComprimit(File fitxerLlegir, File fitxerEscriure) {
-        try {
-            try {
-                //inicialitzem els buffers.
-                lectorFichero = new BufferedReader(new FileReader(fitxerLlegir));
-                escritorFichero = new BufferedWriter(new FileWriter(fitxerEscriure));
-                //Es crea un FileOutputStream i un FileInputStream
-                FileInputStream inputStream = new FileInputStream(fitxerLlegir);
-                FileOutputStream outputStream = new FileOutputStream("archivoZIP.zip");
+    public void copiarFitxersBuffersComprimit(File fitxerLlegir, File fitxerEscriure) throws FileNotFoundException, IOException {
 
-                GZIPOutputStream gos = new GZIPOutputStream(outputStream);
+        BufferedReader lector = new BufferedReader(new FileReader(fitxerLlegir));
 
-                byte data[] = new byte[1024];
+        GZIPOutputStream gzip = new GZIPOutputStream(new FileOutputStream(fitxerEscriure));
 
-                //Bucle que recorrera el fitxer que es llegeix i va escribint en el fitxer
-                //d'escriptura.
-                int c;
-                int contador = 0;
-                while ((c = inputStream.read()) != -1) {
-                    data[contador] = (byte) c;
-                    gos.write(contador);
-                    contador++;
-                }
+        BufferedWriter escritor = new BufferedWriter(new OutputStreamWriter(gzip));
 
-                //Es tanca el buffer lector i l'escriptor.
-                lectorFichero.close();
-                escritorFichero.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();//traza de excepcion 
+        String linea;
 
-            } catch (IOException e) {
-                e.printStackTrace();//traza de excepcion 
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+        while ((linea = lector.readLine()) != null) {
+
+            escritor.write(linea);
+
+            escritor.flush();
         }
     }
 
@@ -121,28 +102,36 @@ public class GestioDocumentCaracters {
      * @param cadena
      * @param fitxer
      */
-    public void CercarCadenaText(String cadena, File fitxer) {
-        try {
-            final BufferedReader reader = new BufferedReader(new FileReader(fitxer));
-            String linia = "";
-            while ((linia = reader.readLine()) != null) {
-                if (linia.indexOf(cadena) != -1) {
-                    System.out.println("" + linia);
-                }
+    public boolean CercarCadenaText(String cadena, File fitxer) throws IOException {
+        
+        BufferedReader lector = new BufferedReader(new FileReader(fitxerLlegir));
+
+        String linea;
+
+        while ((linea = lector.readLine()) != null) {
+
+            if (linea.equals(cadena)) {
+                return true;
+
             }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        return false;
+
     }
 
+    /**
+     * Metode que rep una URL i un File i escriu en el File el contingut de la
+     * URL.
+     *
+     * @param url
+     * @param fitxer
+     * @throws Exception
+     */
     public void descarregarURL(String url, File fitxer) throws Exception {
-        
+
         URL direccio = new URL(url);
         InputStream inputStream = direccio.openStream();
-        OutputStream outputStream = new FileOutputStream(fitxer); 
+        OutputStream outputStream = new FileOutputStream(fitxer);
 
         byte[] dades = new byte[2048];
         int longitud;
@@ -151,8 +140,8 @@ public class GestioDocumentCaracters {
             outputStream.write(dades, 0, longitud);
         }
 
-        inputStream.close();  
-        outputStream.close(); 
+        inputStream.close();
+        outputStream.close();
 
     }
 
