@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import static java.io.FileDescriptor.in;
 import static java.io.FileDescriptor.out;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -29,12 +30,12 @@ public class GestioDocumentCaracters {
     BufferedReader lectorFichero;
     BufferedWriter escritorFichero;
 
-
     /**
-     * Metode que copia el contingut d'un fitxer en un altre.
-     * Se li passen el fitxer d'on llegeix i el fitxer on escriu.
+     * Metode que copia el contingut d'un fitxer en un altre. Se li passen el
+     * fitxer d'on llegeix i el fitxer on escriu.
+     *
      * @param fitxerLlegir
-     * @param fitxerEscriure 
+     * @param fitxerEscriure
      */
     public void copiarFitxersBuffers(File fitxerLlegir, File fitxerEscriure) {
         try {
@@ -43,14 +44,14 @@ public class GestioDocumentCaracters {
                 lectorFichero = new BufferedReader(new FileReader(fitxerLlegir));
                 escritorFichero = new BufferedWriter(new FileWriter(fitxerEscriure));
                 String linea;
-                
+
                 //Bucle que recorrera el fitxer que es llegeix i va escribint en el fitxer
                 //d'escriptura.
-                while ((linea = lectorFichero.readLine()) != null) { 
+                while ((linea = lectorFichero.readLine()) != null) {
                     escritorFichero.write(linea + "\n");
                     System.out.println(linea);
                 }
-                
+
                 //Es tanca el buffer lector i l'escriptor.
                 lectorFichero.close();
                 escritorFichero.close();
@@ -65,12 +66,12 @@ public class GestioDocumentCaracters {
         }
     }
 
-
     /**
-     * Metode que copia el contingut d'un fitxer en un altre i el comprimeix.
-     * Se li passen el fitxer d'on llegeix i el fitxer on escriu.
+     * Metode que copia el contingut d'un fitxer en un altre i el comprimeix. Se
+     * li passen el fitxer d'on llegeix i el fitxer on escriu.
+     *
      * @param fitxerLlegir
-     * @param fitxerEscriure 
+     * @param fitxerEscriure
      */
     public void copiarFitxersBuffersComprimit(File fitxerLlegir, File fitxerEscriure) {
         try {
@@ -78,19 +79,26 @@ public class GestioDocumentCaracters {
                 //inicialitzem els buffers.
                 lectorFichero = new BufferedReader(new FileReader(fitxerLlegir));
                 escritorFichero = new BufferedWriter(new FileWriter(fitxerEscriure));
-                //Es crea un FileOutputStream
+                //Es crea un FileOutputStream i un FileInputStream
+                FileInputStream inputStream = new FileInputStream(fitxerLlegir);
                 FileOutputStream outputStream = new FileOutputStream("archivoZIP.zip");
-                
+
                 GZIPOutputStream gos = new GZIPOutputStream(outputStream);
-                String linea;
+                
+
+                byte data[] = new byte[1024];
                 
                 //Bucle que recorrera el fitxer que es llegeix i va escribint en el fitxer
                 //d'escriptura.
-                while ((linea = lectorFichero.readLine()) != null) { 
-                    escritorFichero.write(linea + "\n");
-                    System.out.println(linea);
+                int c;
+                int contador = 0;
+                while ((c = inputStream.read()) != -1) {
+                    data[contador] = (byte) c;
+                    outputStream.write(contador);
+                contador++;
                 }
                 
+
                 //Es tanca el buffer lector i l'escriptor.
                 lectorFichero.close();
                 escritorFichero.close();
