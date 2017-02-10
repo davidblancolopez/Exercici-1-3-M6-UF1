@@ -11,8 +11,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import static java.lang.System.in;
 import static java.lang.System.out;
+import java.net.URL;
 import java.util.zip.GZIPOutputStream;
 import static javax.management.Query.in;
 import static sun.misc.MessageUtils.out;
@@ -112,11 +115,11 @@ public class GestioDocumentCaracters {
     }
 
     /**
-     * Metode que rep una cadena de ext y un fitxer i busca a dintre si hi ha escrit
-     * el que hi ha a la cadena.
-     * 
+     * Metode que rep una cadena de ext y un fitxer i busca a dintre si hi ha
+     * escrit el que hi ha a la cadena.
+     *
      * @param cadena
-     * @param fitxer 
+     * @param fitxer
      */
     public void CercarCadenaText(String cadena, File fitxer) {
         try {
@@ -135,11 +138,22 @@ public class GestioDocumentCaracters {
         }
     }
 
-    
-    public void descarregarURL(){
+    public void descarregarURL(String url, File fitxer) throws Exception {
         
+        URL direccio = new URL(url);
+        InputStream inputStream = direccio.openStream();
+        OutputStream outputStream = new FileOutputStream(fitxer); // path y nombre del nuevo fichero creado
+
+        byte[] b = new byte[2048];
+        int longitud;
+
+        while ((longitud = inputStream.read(b)) != -1) {
+            outputStream.write(b, 0, longitud);
+        }
+
+        inputStream.close();  // Cerramos la conexión entrada
+        outputStream.close(); // Cerramos la conexión salida
+
     }
-    
-    
-    
+
 }
