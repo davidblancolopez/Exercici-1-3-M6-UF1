@@ -103,7 +103,7 @@ public class GestioDocumentCaracters {
      * @param fitxer
      */
     public boolean CercarCadenaText(String cadena, File fitxer) throws IOException {
-        
+
         BufferedReader lector = new BufferedReader(new FileReader(fitxerLlegir));
 
         String linea;
