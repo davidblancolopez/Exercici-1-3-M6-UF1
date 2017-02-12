@@ -3,9 +3,6 @@ package exercici.pkg1.pkg3.m6.uf1;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import static java.io.FileDescriptor.in;
-import static java.io.FileDescriptor.out;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -14,12 +11,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import static java.lang.System.in;
-import static java.lang.System.out;
+
 import java.net.URL;
 import java.util.zip.GZIPOutputStream;
-import static javax.management.Query.in;
-import static sun.misc.MessageUtils.out;
+
 
 public class GestioDocumentCaracters {
 
@@ -60,10 +55,10 @@ public class GestioDocumentCaracters {
                 lectorFichero.close();
                 escritorFichero.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();//traza de excepcion 
+                e.printStackTrace();
 
             } catch (IOException e) {
-                e.printStackTrace();//traza de excepcion 
+                e.printStackTrace();
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -105,18 +100,17 @@ public class GestioDocumentCaracters {
     public boolean CercarCadenaText(String cadena, File fitxer) throws IOException {
 
         BufferedReader lector = new BufferedReader(new FileReader(fitxerLlegir));
-
+        boolean valor = false;
         String linea;
 
         while ((linea = lector.readLine()) != null) {
 
             if (linea.equals(cadena)) {
-                return true;
-
+                valor = true;
             }
         }
-        return false;
-
+        
+        return valor;
     }
 
     /**
